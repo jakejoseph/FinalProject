@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            
+        .axis path,
+        .axis line {
+            fill:none;
+            stroke:black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family:sans-serif;
+            font-size: 11px;
+        }
+        .wt {
+            opacity: 0.2;
+            fill: darkgrey;
+            
+        }
+        .Average {
+            opacity: 1.0;
+            fill:black;
+           
+        }
+        
+        </style>
+        <script type="text/javascript">
+
+            
+            function draw_BMI(dataset) {
+            
+            var byYearData = d3.nest()
+                               .key(function (d){
+                                   return d['debut']
+                               })
+                               .entries(dataset);
+                               debugger;
+            
+            
+            }
+            
+            </script>
+    
+    </head>
+    <body>
+        <script>
+        format = d3.time.format("%Y");
+        d3.csv("BMI_w_averages2.csv",
+        function(d) {
+            d["BMI"]=+d["BMI"];
+            d["height"]=+d["height"];
+            d["weight"]=+d["weight"];
+            d["debut"]=format.parse(d[
+                "debut"]);
+            return d;
+
+        }, draw_BMI);
+        </script>
+        
+    </body>
+</html>     
