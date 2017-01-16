@@ -23,7 +23,7 @@
         }
         .Average {
             opacity: 1.0;
-            fill:black;
+            fill:red;
            
         }
         
@@ -35,11 +35,46 @@
             
             var byYearData = d3.nest()
                                .key(function (d){
-                                   return d['debut']
+                                   return d['debut'].getUTCFullYear()
                                })
                                .entries(dataset);
-                               debugger;
-            
+                               
+            var w = 1400;
+            var h = 800;
+            var wPadding = 50;
+            var hPadding = 50;
+            var axisHPadding = 40;
+            var axisWPadding = 40;
+
+            var xScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
+            .range([wPadding,w-wPadding]);
+              
+            var yScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["height"];}),d3.max(dataset, function(d) {return d["height"];})])
+            .range([h-hPadding,hPadding]);
+
+            var rScale = d3.scale.sqrt()
+            .domain([d3.min(dataset, function(d) {return d["weight"];}),d3.max(dataset, function(d) {return d["weight"];})])
+            .range([7,17]);
+         
+            var svg = d3.select("body").append("svg");
+            svg.attr("width",w)
+                .attr("height",h);
+            debugger;
+            svg.selectAll("circle")
+            .data(byYearData)
+            .enter()
+            .append("circle")
+
+            .attr("r",function(d) {return rScale(d.values['weight']);})
+            .attr("cx",function(d){
+            return xScale(d.values["BMI"]);
+            })
+            .attr("class", function(d) {return "wt "+ d.values['nameFirst'] + " " + d.values[0]['nameLast'] + " "+ d.values[0]['debut'].getUTCFullYear()})
+            .attr("cy",function(d){ return yScale(d.values["height"]);})
+
+            ;
             
             }
             
