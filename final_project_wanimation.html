@@ -37,6 +37,7 @@
                                .key(function (d){
                                    return d['debut'].getUTCFullYear()
                                })
+                               .sortKeys(d3.ascending)
                                .entries(dataset);
                                
             var w = 1400;
@@ -63,16 +64,16 @@
                 .attr("height",h);
             debugger;
             svg.selectAll("circle")
-            .data(byYearData)
+            .data(byYearData[0].values)
             .enter()
             .append("circle")
 
-            .attr("r",function(d) {return rScale(d.values['weight']);})
+            .attr("r",function(d) {return rScale(d['weight']);})
             .attr("cx",function(d){
-            return xScale(d.values["BMI"]);
+            return xScale(d["BMI"]);
             })
-            .attr("class", function(d) {return "wt "+ d.values['nameFirst'] + " " + d.values[0]['nameLast'] + " "+ d.values[0]['debut'].getUTCFullYear()})
-            .attr("cy",function(d){ return yScale(d.values["height"]);})
+            .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear()})
+            .attr("cy",function(d){ return yScale(d["height"]);})
 
             ;
             
