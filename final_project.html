@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            
+        .axis path,
+        .axis line {
+            fill:none;
+            stroke:black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family:sans-serif;
+            font-size: 11px;
+        }
+        .wt {
+            opacity: 0.2;
+            fill: darkgrey;
+            
+        }
+        .Average {
+            opacity: 1.0;
+            fill:black;
+           
+        }
+        
+        </style>
+        <script type="text/javascript">
+            
+            
+            function draw_BMI(dataset) {
+            
+            var w = 1400;
+            var h = 800;
+            var wPadding = 50;
+            var hPadding = 50;
+            var axisHPadding = 40;
+            var axisWPadding = 40;
+
+            var xScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
+            .range([wPadding,w-wPadding]);
+              
+            var yScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["height"];}),d3.max(dataset, function(d) {return d["height"];})])
+            .range([h-hPadding,hPadding]);
+
+            var rScale = d3.scale.sqrt()
+            .domain([d3.min(dataset, function(d) {return d["weight"];}),d3.max(dataset, function(d) {return d["weight"];})])
+            .range([7,17]);
+         
+            var svg = d3.select("body").append("svg");
+            svg.attr("width",w)
+                .attr("height",h);
+            
+            svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("r",function(d) {return rScale(d["weight"]);})
+            .attr("cx",function(d){
+            return xScale(d["BMI"]);
+            })
+            .attr("class", function(d) {return "wt "+ d.nameFirst + " " + d.nameLast + " "+ d.debut.getUTCFullYear()})
+            .attr("cy",function(d){ return yScale(d["height"]);})
+            ;
+            var xAxis = d3.svg.axis();
+            xAxis.scale(xScale);
+            xAxis.orient("bottom")
+            xAxis.ticks(10);
+            svg.append("g")
+            .attr("class","axis")
+            .attr("transform","translate(0," +(h-axisHPadding)+")")
+            .call(xAxis);
+
+            var yAxis = d3.svg.axis();
+            yAxis.scale(yScale);
+            yAxis.orient("left");
+            svg.append("g")
+            .attr("class","axis")
+            .attr("transform","translate(" +(axisWPadding)+",0)")
+            .call(yAxis);
+            /*
+            svg.selectAll("text")
+            .data(dataset)
+            .enter()    
+            .append("text")
+            .text(function(d){
+                return "x=" + Math.round(d[0],4);
+            })
+            .attr("x" , function(d){
+                return xScale(d[0])-10;
+            })
+            .attr("y", function(d){
+                return yScale(d[1])-10;
+            });
+           */
+            };
+            </script>
+    </head>
+    <body>
+        <script>
+        format = d3.time.format("%Y");
+        d3.csv("BMI_w_averages2.csv",
+        function(d) {
+            d["BMI"]=+d["BMI"];
+            d["height"]=+d["height"];
+            d["weight"]=+d["weight"];
+            d["debut"]=format.parse(d[
+                "debut"]);
+            return d;
+
+        }, draw_BMI);
+        </script>
+        
+    </body>
+</html>     

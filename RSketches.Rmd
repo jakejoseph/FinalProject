@@ -1,0 +1,34 @@
+---
+title: "Sketches for DataVis Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+setwd('C:/Users/jdjoseph/Google Drive/UDACITY/DataVisualization/FinalProject')
+players <- read.csv("players_edit.csv")
+names(players)
+
+year_aggregate <- aggregate(players[,(3:6)],list(players$debut),mean)
+
+
+year_aggregate$Group.1 <- NULL
+
+year_aggregate$nameFirst <- "Joe"
+year_aggregate$nameLast <- "Average"
+
+
+output_df <- rbind(players,year_aggregate)
+
+ggplot(aes(x = debut, y = BMI), data = year_aggregate) +
+  geom_line()
+
+ggplot(aes(x = debut, y = weight), data = year_aggregate) +
+  geom_line()
+
+ggplot(aes(x = debut, y = height), data = year_aggregate) +
+  geom_line()
+
+write.csv(output_df,file="BMI_w_averages.csv")
+```
