@@ -17,6 +17,7 @@
             font-size: 11px;
         }
         h2 {
+            color:black;
     text-align: center;
 }   
       
@@ -56,16 +57,20 @@
             var svg = d3.select("body").append("svg");
             svg.attr("width",w)
                 .attr("height",h);
+            var header = d3.select("body").append("h2");
            
             
             function draw_by_year(byYearData,i){
+            
+            
             var circles = svg.selectAll("circle")
             .data(byYearData[i].values, function(d){
                 return d['playerKey'];
             }  );
+            
+            
             circles.exit().remove()
-            var title = d3.select('h2')
-                          .text("title");
+           
             
             circles.enter()
             .append("circle")
@@ -90,6 +95,7 @@
                     return "0.4";
                 }
                 })
+            
             
             ;
             
