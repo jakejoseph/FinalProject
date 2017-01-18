@@ -37,22 +37,22 @@
                                            
             var w = 1400;
             var h = 800;
-            var wPadding = 50;
-            var hPadding = 50;
-            var axisHPadding = 40;
-            var axisWPadding = 40;
+            var wPadding = 20;
+            var hPadding = 20;
+            var axisHPadding = 20;
+            var axisWPadding = 20;
 
-            var xScale = d3.scale.linear()
-            .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
-            .range([wPadding,w-wPadding]);
-              
             var yScale = d3.scale.linear()
-            .domain([d3.min(dataset, function(d) {return d["height"];}),d3.max(dataset, function(d) {return d["height"];})])
+            .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
             .range([h-hPadding,hPadding]);
+              
+            var xScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["height"];}),d3.max(dataset, function(d) {return d["height"];})])
+            .range([wPadding,w-wPadding]);
 
             var rScale = d3.scale.sqrt()
             .domain([d3.min(dataset, function(d) {return d["weight"];}),d3.max(dataset, function(d) {return d["weight"];})])
-            .range([7,17]);
+            .range([5,30]);
          
             var svg = d3.select("body").append("svg");
             svg.attr("width",w)
@@ -63,7 +63,27 @@
             function draw_by_year(byYearData,i){
             
             
-            var circles = svg.selectAll("circle")
+            var avgs = svg.selectAll("dot")
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            .enter().append("circle")
+            
+            avgs.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id", "avg-circ")
+            .attr("class", function(d) {return "avg "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
+            .attr("r",function(d) {return rScale(d['weight']);})
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
+            })
+            .attr("cx",function(d){ return xScale(d["height"]);})
+            .attr("fill","red")
+            .transition()
+            .duration(1200)
+            
+            .attr("opacity","0.3");
+            
+            
+            var circles = svg.selectAll("#wt-circ")
             .data(byYearData[i].values, function(d){
                 return d['playerKey'];
             }  );
@@ -77,10 +97,10 @@
             .attr("id", "wt-circ")
             .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
             .attr("r",function(d) {return rScale(d['weight']);})
-            .attr("cx",function(d){
-            return xScale(d["BMI"]);
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
             })
-            .attr("cy",function(d){ return yScale(d["height"]);})
+            .attr("cx",function(d){ return xScale(d["height"]);})
             .attr("fill",function(d) {
                 if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
                     return "red";
@@ -92,11 +112,50 @@
                 if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
                     return "1";
                 } else {
-                    return "0.4";
+                    return "0.3";
                 }
                 })
+            .transition()
+            .duration(1000)
             
+            .attr("opacity","0");
+
+            var year_text = svg.selectAll("#yr-text")
+            .data(byYearData[i].values, function(d){
+                return d['playerKey'];
+            }  );
             
+            year_text.exit().remove()
+            year_text.enter()
+            .append("text")
+            .attr("id","yr-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","40px")
+            .attr("x", w*.25)
+            .attr("y", h/2)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return d['debut'].getUTCFullYear();})
+
+            var bmi_text = svg.selectAll("#bmi-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            bmi_text.exit().remove();
+            bmi_text.enter().append("text");
+            //debugger;
+            bmi_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","bmi-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+100)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average BMI:" +d['BMI'];})
+
+
+          
             ;
             
                 }
@@ -110,7 +169,7 @@
             if(year_idx >= byYearData.length) {
                 clearInterval(year_interval);
             }
-          }, 500);
+          }, 200);
             ;
            }
             
