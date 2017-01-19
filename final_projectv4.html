@@ -113,9 +113,6 @@
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
             .attr("fill","red")
-            //.transition()
-            //.duration(1200)
-            
             .attr("opacity","0.5");
             
             
@@ -124,41 +121,25 @@
                 return d['playerKey'];
             }  );
             
-            
             circles.exit().remove()
-           
             
             circles.enter()
             .append("circle")
             .attr("id", "wt-circ")
             .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
             .transition()
-            .duration(150)
+            .duration(350)
             .attr("r",function(d) {return rScale(d['weight']);})
             .attr("cy",function(d){
             return yScale(d["BMI"]);
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
             .attr("opacity", ".2")
-            .attr("color","darkgrey");
-            /*.attr("fill",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "red";
-                } else {
-                    return "lightgrey";
-                }
-                })    
-            .attr("opacity",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "1";
-                } else {
-                    return "0.3";
-                }
-                });
+            .attr("color","darkgrey")           
             .transition()
-            .duration(1000)
-            
-            .attr("opacity","0");*/
+            .duration(1000)            
+            .attr("opacity","0");
+
 
             var year_text = svg.selectAll("#yr-text")
             .data(byYearData[i].values, function(d){
@@ -192,7 +173,7 @@
             .attr("y", (h/2)+100)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average BMI:" +d['BMI'];})
+            .text(function(d) {return "Average BMI:"+((Math.round(+d['BMI']*100))/100);})
 
             var wt_text = svg.selectAll("#wt-text")
             
@@ -209,7 +190,7 @@
             .attr("y", (h/2)+75)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average Weight:" +d['weight'];})
+            .text(function(d) {return "Average Weight in pounds:" +Math.round(+d['weight']);})
             
             var ht_text = svg.selectAll("#ht-text")
             
@@ -226,7 +207,7 @@
             .attr("y", (h/2)+50)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average Height:" +d['height'];})
+            .text(function(d) {return "Average Height in inches:" +((Math.round(+d['height']*10))/10);})
 
           
             ;
@@ -240,8 +221,7 @@
             var circles = svg.selectAll("#wt-circ")
             .data(byYearData[i].values, function(d){
                 return d['playerKey'];
-            }  );
-            
+            }  )
             
             circles.exit().remove()
            
@@ -250,33 +230,16 @@
             .append("circle")
             .attr("id", "wt-circ")
             .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
-            .transition()
-            .duration(150)
+            
             .attr("r",function(d) {return rScale(d['weight']);})
             .attr("cy",function(d){
             return yScale(d["BMI"]);
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
+          
             .attr("opacity", ".2")
-            .attr("color","darkgrey");
-            /*.attr("fill",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "red";
-                } else {
-                    return "lightgrey";
-                }
-                })    
-            .attr("opacity",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "1";
-                } else {
-                    return "0.3";
-                }
-                });
-            .transition()
-            .duration(1000)
-            
-            .attr("opacity","0");*/
+            .attr("color","darkgrey")
+       
             var avgs = svg.selectAll("#avg-circ")
             .data(byYearData[i].values,function(d) {return d['nameLast'];
             } )
@@ -292,9 +255,6 @@
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
             .attr("fill","red")
-            //.transition()
-            //.duration(1200)
-            
             .attr("opacity","1");
             
 
@@ -330,7 +290,7 @@
             .attr("y", (h/2)+100)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average BMI:" +d['BMI'];})
+            .text(function(d) {return "Average BMI:"+((Math.round(+d['BMI']*100))/100);})
 
             var wt_text = svg.selectAll("#wt-text")
             
@@ -347,7 +307,7 @@
             .attr("y", (h/2)+75)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average Weight:" +d['weight'];})
+            .text(function(d) {return "Average Weight in pounds:" +Math.round(+d['weight']);})
             
             var ht_text = svg.selectAll("#ht-text")
             
@@ -364,7 +324,7 @@
             .attr("y", (h/2)+50)
             .attr("fill","darkgrey")
             .attr("opacity",".5")
-            .text(function(d) {return "Average Height:" +d['height'];})
+            .text(function(d) {return "Average Height in inches:" +((Math.round(+d['height']*10))/10);})
 
           
             ;
@@ -396,7 +356,7 @@
          
             }
             
-          }, 200);
+          }, 275);
         
             
            }
