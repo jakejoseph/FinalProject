@@ -17,7 +17,11 @@
             font-size: 11px;
         }
         
-      
+        .Average {
+            opacity: 1.0;
+            fill:red;
+           
+        }
         
         </style>
         <script type="text/javascript">
@@ -56,14 +60,15 @@
                 .attr("height",h);
            
             
-            function draw_by_year(byYearData,i){
+            function draw_by_year(byYearData){
+                loop_len = byYearData.length
+                for(i = 0;i<loop_len;i++){
             var circles = svg.selectAll("circle")
             .data(byYearData[i].values, function(d){
                 return d['playerKey'];
-            }  );
-           //circles.exit().remove()
-            //debugger;
-            circles.enter()
+            }  )
+            
+            .enter()
              //
             .append("circle")
             .attr("id", "wt-circ")
@@ -72,45 +77,29 @@
             .attr("cx",function(d){
             return xScale(d["BMI"]);
             })
-            .attr("fill",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "red";
-                } else {
-                    return "lightgrey";
-                }
-                }
-)
-            .attr("opacity","0")
+            .attr("color","darkgrey")
+            .attr("opacity",".5")
             .attr("cy",function(d){ return yScale(d["height"]);})
             .transition()
-            .delay(function(d,i){return i*250;})
-            .attr("opacity",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "1";
-                } else {
-                    return "0.1";
-                }
-                })
+            .duration(100)
+            .attr("opacity","0.2")
+            .delay(function(d,i){return i*500;})
             .transition()
-            .duration(250)
-            .attr("opacity",function(d) {
-                if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
-                    return "1";
-                } else {
-                    return "0";
-                }
-                })
-            ;
+            .duration(1200)
+            
+            .attr("opacity","0")
+            .transition()
+            .remove();
             
                 }
-            draw_by_year(byYearData,1);
+            // return circles;
            }
             
             
-            
+            draw_by_year(byYearData);
             
            
-            
+            }
             
             
 

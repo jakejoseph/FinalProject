@@ -98,7 +98,7 @@
             //.transition()
             //.duration(1200)
             
-            .attr("opacity","0.3");
+            .attr("opacity","0.5");
             
             
             var circles = svg.selectAll("#wt-circ")
@@ -121,7 +121,7 @@
             return yScale(d["BMI"]);
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
-            .attr("opacity", ".3")
+            .attr("opacity", ".2")
             .attr("color","darkgrey");
             /*.attr("fill",function(d) {
                 if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
@@ -239,7 +239,7 @@
             return yScale(d["BMI"]);
             })
             .attr("cx",function(d){ return xScale(d["height"]);})
-            .attr("opacity", ".3")
+            .attr("opacity", ".2")
             .attr("color","darkgrey");
             /*.attr("fill",function(d) {
                 if(d['nameLast'] == 'Average' && d['nameFirst']=='Joe'){
@@ -352,7 +352,7 @@
             ;
             
                 }
-          var year_idx = 130;
+          var year_idx = 0;
 
           var year_interval = setInterval(function() {
             draw_by_year(byYearData,year_idx);
