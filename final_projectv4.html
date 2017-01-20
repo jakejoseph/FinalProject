@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>D3 Test</title>
+        <title>144 Years of the Shapes and Sizes of Baseball Players </title>
         <script type="text/javascript" src="d3/d3.v3.js"></script>
         <style type="text/css">
             
@@ -108,11 +108,21 @@
             .call(yAxis);
 
             svg.append("text")
+                 .attr("class", "page_title")
+                 .attr("text-anchor", "start")
+                 .attr("x", wPadding-2)
+                 .attr("y", hPadding)
+                 .style("font-size", "30px")
+                 .style("font-family","sans-serif")
+                 .style("fill","darkgrey")
+                 .text("144 Years of Baseball Player's Shapes and Sizes");
+
+            svg.append("text")
                  .attr("class", "x label")
                  .attr("text-anchor", "end")
                  .attr("x", w/2)
                  .attr("y", h-4)
-                 .style("font", "14px")
+                 .style("font-size", "14px")
                  .style("font-family","sans-serif")
                  .text("Height in inches");
            
@@ -122,7 +132,7 @@
                 .attr("x", w-15)
                 .attr("y", h/2)
          
-                 .style("font", "14px")
+                 .style("font-size", "14px")
                  .style("font-family","sans-serif")
                  .attr("transform","rotate(270,"+(w-15)+","+h/2+")")
                  .text("BMI");
