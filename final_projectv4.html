@@ -398,7 +398,19 @@
                              .text(function (d) {return d;});
                 buttons.on("click", function(d)
                 {
-                    d3.select(this)
+                
+                d3.select(".years_buttons")
+                .selectAll("span")
+                .transition()
+                .duration(500)
+                .style("color","black")
+                .style("background","darkgrey");
+                
+                d3.select(this)
+                .transition()
+                .duration(500)
+                .style("background","lightgrey")
+                .style("color","black");
                     draw_by_year_clear(byYearData,d-1871)
                 })
          
