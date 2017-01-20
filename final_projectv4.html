@@ -136,6 +136,40 @@
                  .style("font-family","sans-serif")
                  .attr("transform","rotate(270,"+(w-15)+","+h/2+")")
                  .text("BMI");
+
+            svg.append("text")
+                .attr("class","wt_legend_avg")
+                .attr("text-anchor","start")
+                .attr("x",w*.25)
+                .attr("y",h/2 + 150)
+                .style("font-size", "14px")
+                .style("font-family","sans-serif")
+                .style("fill","lightgrey")
+                .text("Average Player at 150 pounds");
+            
+            svg.append("circle")
+                .attr("class", "legend_circ")
+                .attr("cx",w*.25 +210)
+                .attr("cy",h/2+145)
+                .attr("r",rScale(150))
+                .attr("fill","red");
+            
+             svg.append("text")
+                .attr("class","wt_legend_200")
+                .attr("text-anchor","start")
+                .attr("x",w*.25)
+                .attr("y",h/2 + 200)
+                .style("font-size", "14px")
+                .style("font-family","sans-serif")
+                .style("fill","lightgrey")
+                .text("Player at 200 Pounds");
+            
+            svg.append("circle")
+                .attr("class", "legend_circ")
+                .attr("cx",w*.25 +165)
+                .attr("cy",h/2+195)
+                .attr("r",rScale(200))
+                .attr("fill","darkgrey");
                     
             var div = d3.select("body").append("div")	
                         .attr("class", "tooltip")				
@@ -388,7 +422,7 @@
             ;
             
                 }
-          var year_idx = 140;
+          var year_idx = 0;
 
           var year_interval = setInterval(function() {
             draw_by_year(byYearData,year_idx);
