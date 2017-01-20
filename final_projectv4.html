@@ -68,10 +68,10 @@
                                            
             var w = 1400;
             var h = 800;
-            var wPadding = 20;
-            var hPadding = 20;
-            var axisHPadding = 20;
-            var axisWPadding = 21;
+            var wPadding = 50;
+            var hPadding = 50;
+            var axisHPadding = 50;
+            var axisWPadding = 51;
 
             var yScale = d3.scale.linear()
             .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
@@ -106,7 +106,26 @@
             .attr("class","axis")
             .attr("transform","translate(" +(w-axisWPadding)+",0)")
             .call(yAxis);
+
+            svg.append("text")
+                 .attr("class", "x label")
+                 .attr("text-anchor", "end")
+                 .attr("x", w/2)
+                 .attr("y", h-4)
+                 .style("font", "14px")
+                 .style("font-family","sans-serif")
+                 .text("Height in inches");
            
+           svg.append("text")
+               .attr("class", "y label")
+                .attr("text-anchor", "end")
+                .attr("x", w-15)
+                .attr("y", h/2)
+         
+                 .style("font", "14px")
+                 .style("font-family","sans-serif")
+                 .attr("transform","rotate(270,"+(w-15)+","+h/2+")")
+                 .text("BMI");
                     
             var div = d3.select("body").append("div")	
                         .attr("class", "tooltip")				
