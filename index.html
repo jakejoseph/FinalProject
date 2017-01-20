@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>144 Years of the Shapes and Sizes of Baseball Players </title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            
+        .axis path,
+        .axis line {
+            fill:none;
+            stroke:black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family:sans-serif;
+            font-size: 11px;
+        }
+        h2 {
+            color:black;
+    text-align: center;
+}       div.years_buttons {
+        position: fixed;
+        top: 5px;
+        left: 50px;
+        font-family:sans-serif;
+
+}
+    div.years_buttons span {
+        background-color:lightgrey;
+        outline-color:black;
+        padding: 5px;
+        margin: 10px;
+        border-radius:3px;
+}
+      div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 100px;					
+    height: 50px;					
+    padding: 2px;				
+    font: 11px sans-serif;		
+    background: darkgrey;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;
+    color:black;		
+}
+
+        
+        </style>
+        <script type="text/javascript">
+
+            
+            function draw_BMI(dataset) {
+            
+             var year_int_idx = [0,50,80,109,119,129,139,144];
+             var year_int_name = [1871,1921,1951,1980,1990,2000,2010,2015];
+
+          
+             
+             var byYearData = d3.nest()
+                               .key(function (d){
+                                   return d['debut'].getUTCFullYear()
+                               })
+                               .sortKeys(d3.ascending)
+                               .entries(dataset);
+                                           
+            var w = 1400;
+            var h = 800;
+            var wPadding = 50;
+            var hPadding = 50;
+            var axisHPadding = 50;
+            var axisWPadding = 51;
+
+            var yScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["BMI"];}),d3.max(dataset, function(d) {return d["BMI"];})])
+            .range([h-hPadding,hPadding]);
+              
+            var xScale = d3.scale.linear()
+            .domain([d3.min(dataset, function(d) {return d["height"];}),d3.max(dataset, function(d) {return d["height"];})])
+            .range([wPadding,w-wPadding]);
+
+            var rScale = d3.scale.sqrt()
+            .domain([d3.min(dataset, function(d) {return d["weight"];}),d3.max(dataset, function(d) {return d["weight"];})])
+            .range([5,30]);
+         
+            var svg = d3.select("body").append("svg");
+            svg.attr("width",w)
+                .attr("height",h);
+
+            var xAxis = d3.svg.axis();
+            xAxis.scale(xScale);
+            xAxis.orient("bottom")
+            xAxis.ticks(10);
+            svg.append("g")
+            .attr("class","axis")
+            .attr("transform","translate(-1," +(h-axisHPadding)+")")
+            .call(xAxis);
+
+                               
+            var yAxis = d3.svg.axis();
+            yAxis.scale(yScale);
+            yAxis.orient("right");
+            svg.append("g")
+            .attr("class","axis")
+            .attr("transform","translate(" +(w-axisWPadding)+",0)")
+            .call(yAxis);
+
+            svg.append("text")
+                 .attr("class", "page_title")
+                 .attr("text-anchor", "start")
+                 .attr("x", wPadding-2)
+                 .attr("y", hPadding)
+                 .style("font-size", "30px")
+                 .style("font-family","sans-serif")
+                 .style("fill","darkgrey")
+                 .text("144 Years of the Shapes and Sizes of Baseball Players");
+
+            svg.append("text")
+                 .attr("class", "x label")
+                 .attr("text-anchor", "end")
+                 .attr("x", w/2)
+                 .attr("y", h-4)
+                 .style("font-size", "14px")
+                 .style("font-family","sans-serif")
+                 .text("Height in inches");
+           
+           svg.append("text")
+               .attr("class", "y label")
+                .attr("text-anchor", "end")
+                .attr("x", w-15)
+                .attr("y", h/2)
+         
+                 .style("font-size", "14px")
+                 .style("font-family","sans-serif")
+                 .attr("transform","rotate(270,"+(w-15)+","+h/2+")")
+                 .text("BMI");
+
+            svg.append("text")
+                .attr("class","wt_legend_avg")
+                .attr("text-anchor","start")
+                .attr("x",w*.25)
+                .attr("y",h/2 + 150)
+                .style("font-size", "14px")
+                .style("font-family","sans-serif")
+                .style("fill","lightgrey")
+                .text("Average Player at 150 pounds");
+            
+            svg.append("circle")
+                .attr("class", "legend_circ")
+                .attr("cx",w*.25 +210)
+                .attr("cy",h/2+145)
+                .attr("r",rScale(150))
+                .attr("fill","red");
+            
+             svg.append("text")
+                .attr("class","wt_legend_200")
+                .attr("text-anchor","start")
+                .attr("x",w*.25)
+                .attr("y",h/2 + 200)
+                .style("font-size", "14px")
+                .style("font-family","sans-serif")
+                .style("fill","lightgrey")
+                .text("Player at 200 Pounds");
+            
+            svg.append("circle")
+                .attr("class", "legend_circ")
+                .attr("cx",w*.25 +165)
+                .attr("cy",h/2+195)
+                .attr("r",rScale(200))
+                .attr("fill","darkgrey");
+                    
+            var div = d3.select("body").append("div")	
+                        .attr("class", "tooltip")				
+                        .style("opacity", 0);
+
+            function draw_by_year(byYearData,i){
+            
+            
+            var avgs = svg.selectAll("dot")
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            .enter().append("circle")
+            
+            avgs.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id", "avg-circ")
+            .attr("class", function(d) {return "avg "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
+            .attr("r",function(d) {return rScale(d['weight']);})
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
+            })
+            .attr("cx",function(d){ return xScale(d["height"]);})
+            .attr("fill","red")
+            .attr("opacity","0.5");
+            
+            
+            var circles = svg.selectAll("#wt-circ")
+            .data(byYearData[i].values, function(d){
+                return d['playerKey'];
+            }  );
+            
+            circles.exit().remove()
+            
+            circles.enter()
+            .append("circle")
+            .attr("id", "wt-circ")
+            .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
+            .transition()
+            .duration(350)
+            .attr("r",function(d) {return rScale(d['weight']);})
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
+            })
+            .attr("cx",function(d){ return xScale(d["height"]);})
+            .attr("opacity", ".2")
+            .attr("color","darkgrey")           
+            .transition()
+            .duration(1000)            
+            .attr("opacity","0");
+
+
+            var year_text = svg.selectAll("#yr-text")
+            .data(byYearData[i].values, function(d){
+                return d['playerKey'];
+            }  );
+            
+            year_text.exit().remove()
+            year_text.enter()
+            .append("text")
+            .attr("id","yr-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","50px")
+            .attr("x", w*.25)
+            .attr("y", h/2)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Year: " +d['debut'].getUTCFullYear();})
+
+            var bmi_text = svg.selectAll("#bmi-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            bmi_text.exit().remove();
+            bmi_text.enter().append("text");
+            //debugger;
+            bmi_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","bmi-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+100)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average BMI:"+((Math.round(+d['BMI']*100))/100);})
+
+            var wt_text = svg.selectAll("#wt-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            wt_text.exit().remove();
+            wt_text.enter().append("text");
+            //debugger;
+            wt_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","wt-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+75)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average Weight in pounds:" +Math.round(+d['weight']);})
+            
+            var ht_text = svg.selectAll("#ht-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            ht_text.exit().remove();
+            ht_text.enter().append("text");
+            //debugger;
+            ht_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","ht-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+50)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average Height in inches:" +((Math.round(+d['height']*10))/10);})
+
+          
+            ;
+            
+                }
+            function draw_by_year_clear(byYearData,i){
+            
+            
+            
+            
+            var circles = svg.selectAll("#wt-circ")
+            .data(byYearData[i].values, function(d){
+                return d['playerKey'];
+            }  )
+            
+            circles.exit().remove()
+           
+            
+            circles.enter()
+            .append("circle")
+            .attr("id", "wt-circ")
+            .attr("class", function(d) {return "wt "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
+            
+            .attr("r",function(d) {return rScale(d['weight']);})
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
+            })
+            .attr("cx",function(d){ return xScale(d["height"]);})
+          
+            .attr("opacity", ".1")
+            .attr("color","darkgrey")
+            .on("mouseover", function(d) {		
+                    div.transition()		
+                        .duration(200)		
+                        .style("opacity", .9);		
+            div	.html((d.nameFirst) + " "  + d.nameLast + "<br>BMI: " + (Math.round(+d['BMI']*100))/100 + "<br> Height: " + d.height +" in." + "<br> Weight: "  +d.weight + " lbs.")	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })					
+        .on("mouseout", function(d) {		
+            div.transition()		
+                .duration(500)		
+                .style("opacity", 0);	
+        });
+       
+            var avgs = svg.selectAll("#avg-circ")
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            
+            avgs.exit().remove();
+            avgs.enter().append("circle");
+            avgs.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id", "avg-circ")
+            .attr("class", function(d) {return "avg "+ d['nameFirst'] + " " + d['nameLast'] + " "+ d['debut'].getUTCFullYear();})
+            .attr("r",function(d) {return rScale(d['weight']);})
+            .attr("cy",function(d){
+            return yScale(d["BMI"]);
+            })
+            .attr("cx",function(d){ return xScale(d["height"]);})
+            .attr("fill","red")
+            .attr("opacity","1");
+            
+
+            var year_text = svg.selectAll("#yr-text")
+            .data(byYearData[i].values, function(d){
+                return d['playerKey'];
+            }  );
+            
+            year_text.exit().remove()
+            year_text.enter()
+            .append("text")
+            .attr("id","yr-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","50px")
+            .attr("x", w*.25)
+            .attr("y", h/2)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Year: " +d['debut'].getUTCFullYear();})
+
+            var bmi_text = svg.selectAll("#bmi-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            bmi_text.exit().remove();
+            bmi_text.enter().append("text");
+            //debugger;
+            bmi_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","bmi-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+100)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average BMI:"+((Math.round(+d['BMI']*100))/100);})
+
+            var wt_text = svg.selectAll("#wt-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            wt_text.exit().remove();
+            wt_text.enter().append("text");
+            //debugger;
+            wt_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","wt-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+75)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average Weight in pounds:" +Math.round(+d['weight']);})
+            
+            var ht_text = svg.selectAll("#ht-text")
+            
+            .data(byYearData[i].values,function(d) {return d['nameLast'];
+            } )
+            ht_text.exit().remove();
+            ht_text.enter().append("text");
+            //debugger;
+            ht_text.filter(function(d){return d['nameLast'] == "Average";})
+            .attr("id","ht-text")
+            .attr("font-family","sans-serif")
+            .attr("font-size","20px")
+            .attr("x", w*.25)
+            .attr("y", (h/2)+50)
+            .attr("fill","darkgrey")
+            .attr("opacity",".5")
+            .text(function(d) {return "Average Height in inches:" +((Math.round(+d['height']*10))/10);})
+
+          
+            ;
+            
+                }
+          var year_idx = 0;
+
+          var year_interval = setInterval(function() {
+            draw_by_year(byYearData,year_idx);
+
+            year_idx++;
+
+            if(year_idx >= byYearData.length) {
+                clearInterval(year_interval);
+
+                var buttons = d3.select("body")
+                             .append("div")
+                             .attr("class","years_buttons")
+                             .selectAll("span")
+                             .data(year_int_name)
+                             .enter()
+                             .append("span")
+                             .text(function (d) {return d;});
+                buttons.on("click", function(d)
+                {
+                
+                d3.select(".years_buttons")
+                .selectAll("span")
+                .transition()
+                .duration(500)
+                .style("color","black")
+                .style("background","darkgrey");
+                
+                d3.select(this)
+                .transition()
+                .duration(500)
+                .style("background","lightgrey")
+                .style("color","black");
+                    draw_by_year_clear(byYearData,d-1871)
+                })
+         
+            }
+            
+          }, 275);
+        
+            
+           }
+            
+            
+            
+            
+           
+            
+            
+            
+
+
+            </script>
+    
+    </head>
+    <body>
+        <script>
+        format = d3.time.format("%Y");
+        d3.csv("BMI_w_averages2.csv",
+        function(d) {
+            d["BMI"]=+d["BMI"];
+            d["height"]=+d["height"];
+            d["weight"]=+d["weight"];
+            d["debut"]=format.parse(d[
+                "debut"]);
+            d['playerKey']=+d['playerKey'];
+            return d;
+
+        }, draw_BMI);
+        </script>
+        
+    </body>
+</html>     
