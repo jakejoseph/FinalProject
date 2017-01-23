@@ -462,6 +462,7 @@
 
                 .attr("opacity", ".1")
                 .attr("color", "darkgrey")
+                // Display tooltips for player data on weight and height
                 .on("mouseover", function (d) {
                     div.transition()
                         .duration(200)
@@ -476,7 +477,7 @@
                         .duration(500)
                         .style("opacity", 0);
                 })
-                
+                // when bubble is clicked, open google search for player with year and baseball keywords
                  .on("click", function (d) {
                     window.open("https://www.google.com/search?q=baseball+"+d['debut'].getUTCFullYear()+"+"+d['nameLast']+"+"+d['nameFirst']);
                 })
@@ -536,7 +537,6 @@
                 })
             wt_text.exit().remove();
             wt_text.enter().append("text");
-            //debugger;
             wt_text.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -558,7 +558,6 @@
                 })
             ht_text.exit().remove();
             ht_text.enter().append("text");
-            //debugger;
             ht_text.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -613,7 +612,7 @@
                 .attr("opacity", "0.8");
 
         }
-        var year_idx = 99;
+        var year_idx = 0;
 
         var year_interval = setInterval(function () {
             draw_by_year(byYearData, year_idx);
