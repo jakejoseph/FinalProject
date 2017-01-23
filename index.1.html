@@ -51,6 +51,12 @@
             left: 50px;
             font-family: sans-serif;
         }
+        div.slider {
+            position: fixed;
+            top: 5px;
+            left: 750px;
+            font-family: sans-serif;
+        }
         
         div.years_buttons span {
             background-color: lightgrey;
@@ -667,10 +673,10 @@
                 });
 
                 var slider = d3.select("body")
-                                .append("p")
+                                .append("div")
                                 .attr("class","slider")
                                 .attr("id","year_slider")
-                                .html("<input type ='range'> ");
+                                .html("<input type ='range' min='1871' max = '2015' id = 'nYear'> ");
 
             }
 
