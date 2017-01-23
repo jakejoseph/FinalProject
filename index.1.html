@@ -562,12 +562,15 @@
 
 
                 ;
-                 var avgs4 = svg.selectAll("#avg-circ")
-                    .data(byYearData[i].values, function (d) {
-                        return d['nameLast'];
-                    })
-                    avgs4.exit().remove();
-                debugger;
+
+                 
+                 d3.selectAll("#avg-circ")
+                    .remove();
+                 d3.selectAll("#avg-circ2")
+                    .remove();
+               
+               
+               
       
 
                 var avgs2 = svg.selectAll("dot2")
@@ -580,9 +583,9 @@
                 avgs2.filter(function (d) {
                         return d['nameLast'] == "Average";
                     })
-                    .attr("id", "avg-circ")
+                    .attr("id", "avg-circ2")
                     .attr("class", function (d) {
-                        return "avg2" + d['nameFirst'] + " " + d['nameLast'] + " " + d['debut'].getUTCFullYear();
+                        return "avg2 " + d['nameFirst'] + " " + d['nameLast'] + " " + d['debut'].getUTCFullYear();
                     })
                     .attr("r", function (d) {
                         return rScale(d['weight']);
@@ -594,7 +597,7 @@
                         return xScale(d["height"]);
                     })
                     .attr("fill", "red")
-                    .attr("opacity", "0.7");
+                    .attr("opacity", "0.8");
 
             }
             var year_idx = 99;
