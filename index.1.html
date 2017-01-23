@@ -285,14 +285,14 @@
         // clears by year, but keeps persistent average as red
         // circle
         function draw_by_year(byYearData, i) {
-
+            // set dircles based on year data called from index i
             var circles = svg.selectAll("#wt-circ")
                 .data(byYearData[i].values, function (d) {
                     return d['playerKey'];
                 });
-
+            // take out old data
             circles.exit().remove()
-
+            // draw grey circles for all data
             circles.enter()
                 .append("circle")
                 .attr("id", "wt-circ")
@@ -316,7 +316,7 @@
                 .duration(1000)
                 .attr("opacity", "0");
 
-
+            // display the year
             var year_text = svg.selectAll("#yr-text")
                 .data(byYearData[i].values, function (d) {
                     return d['playerKey'];
@@ -335,7 +335,7 @@
                 .text(function (d) {
                     return "Year: " + d['debut'].getUTCFullYear();
                 })
-
+            // display bmi
             var bmi_text = svg.selectAll("#bmi-text")
 
                 .data(byYearData[i].values, function (d) {
@@ -343,7 +343,6 @@
                 })
             bmi_text.exit().remove();
             bmi_text.enter().append("text");
-            //debugger;
             bmi_text.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -357,7 +356,7 @@
                 .text(function (d) {
                     return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                 })
-
+            // display weight
             var wt_text = svg.selectAll("#wt-text")
 
                 .data(byYearData[i].values, function (d) {
@@ -365,7 +364,6 @@
                 })
             wt_text.exit().remove();
             wt_text.enter().append("text");
-            //debugger;
             wt_text.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -379,7 +377,7 @@
                 .text(function (d) {
                     return "Average Weight in pounds:" + Math.round(+d['weight']);
                 })
-
+            // Display height
             var ht_text = svg.selectAll("#ht-text")
 
                 .data(byYearData[i].values, function (d) {
