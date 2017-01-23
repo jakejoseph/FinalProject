@@ -91,6 +91,22 @@
             z-index: 1000;
             border-color: black;
         }
+        div.tooltip3 {
+            position: fixed;
+            text-align: center;
+            width: 50px;
+            height: 35px;
+            padding: 2px;
+            font: 11px sans-serif;
+            background: white;
+            border: 2px;
+            border-style: solid;
+            border-radius: 8px;
+            pointer-events: none;
+            color: black;
+            z-index: 1000;
+            border-color: black;
+        }
         .page_title{
                 font-size:30px;
                 font-family:sans-serif;
@@ -180,7 +196,7 @@
             .attr("text-anchor", "end")
             .attr("x", w / 2)
             .attr("y", h - 4)
-      
+
             .text("Height in inches");
 
         svg.append("text")
@@ -279,6 +295,10 @@
         // div for tooltip for navigation span
         var div2 = d3.select("body").append("div")
             .attr("class", "tooltip2")
+            .style("opacity", 0);
+        // div for year tooltip
+        var div3 = d3.select("body").append("div")
+            .attr("class", "tooltip3")
             .style("opacity", 0);
 
         // function for looping through the dataset
@@ -408,7 +428,7 @@
                     return d['nameLast'];
                 })
                 .enter().append("circle")
-                // note - does not remove the previous circle - just updates
+            // note - does not remove the previous circle - just updates
             avgs.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -478,12 +498,12 @@
                         .style("opacity", 0);
                 })
                 // when bubble is clicked, open google search for player with year and baseball keywords
-                 .on("click", function (d) {
-                    window.open("https://www.google.com/search?q=baseball+"+d['debut'].getUTCFullYear()+"+"+d['nameLast']+"+"+d['nameFirst']);
+                .on("click", function (d) {
+                    window.open("https://www.google.com/search?q=baseball+" + d['debut'].getUTCFullYear() + "+" + d['nameLast'] + "+" + d['nameFirst']);
                 })
-                
-                
-                
+
+
+
                 ;
 
 
@@ -612,7 +632,7 @@
                 .attr("opacity", "0.8");
 
         }
-        var year_idx = 0;
+        var year_idx = 100;
 
         var year_interval = setInterval(function () {
             draw_by_year(byYearData, year_idx);
