@@ -285,7 +285,7 @@
         // clears by year, but keeps persistent average as red
         // circle
         function draw_by_year(byYearData, i) {
-            // set dircles based on year data called from index i
+            // set circles based on year data called from index i
             var circles = svg.selectAll("#wt-circ")
                 .data(byYearData[i].values, function (d) {
                     return d['playerKey'];
@@ -335,7 +335,7 @@
                 .text(function (d) {
                     return "Year: " + d['debut'].getUTCFullYear();
                 })
-            // display bmi
+            // display bmi - note the round function to reduce display size
             var bmi_text = svg.selectAll("#bmi-text")
 
                 .data(byYearData[i].values, function (d) {
@@ -356,7 +356,7 @@
                 .text(function (d) {
                     return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                 })
-            // display weight
+            // display weight - note round function
             var wt_text = svg.selectAll("#wt-text")
 
                 .data(byYearData[i].values, function (d) {
@@ -408,7 +408,7 @@
                     return d['nameLast'];
                 })
                 .enter().append("circle")
-
+                // note - does not remove the previous circle - just updates
             avgs.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
@@ -429,7 +429,7 @@
                 .attr("opacity", "0.6");
 
         }
-
+        //function to run after animation runs.  This function clears all data.
         function draw_by_year_clear(byYearData, i) {
 
 
@@ -475,7 +475,15 @@
                     div.transition()
                         .duration(500)
                         .style("opacity", 0);
-                });
+                })
+                
+                 .on("click", function (d) {
+                    window.open("https://www.google.com/search?q=baseball+"+d['debut'].getUTCFullYear()+"+"+d['nameLast']+"+"+d['nameFirst']);
+                })
+                
+                
+                
+                ;
 
 
 
