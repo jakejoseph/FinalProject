@@ -567,9 +567,15 @@
                         return d['nameLast'];
                     })
                     avgs.exit().remove()
-                    avgs.enter().append("circle")
+                
+                var avgs2 = svg.selectAll("dot")
+                    .data(byYearData[i].values, function (d) {
+                        return d['nameLast'];
+                    })
+                    avgs2.exit().remove()
+                    avgs2.enter().append("circle")
 
-                avgs.filter(function (d) {
+                avgs2.filter(function (d) {
                         return d['nameLast'] == "Average";
                     })
                     .attr("id", "avg-circ")
