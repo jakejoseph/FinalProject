@@ -562,13 +562,15 @@
 
 
                 ;
-                 var avgs = svg.selectAll(".avg")
+                 var avgs4 = svg.selectAll("#avg-circ")
                     .data(byYearData[i].values, function (d) {
                         return d['nameLast'];
                     })
-                    avgs.exit().remove()
-                
-                var avgs2 = svg.selectAll("dot")
+                    avgs4.exit().remove();
+                debugger;
+      
+
+                var avgs2 = svg.selectAll("dot2")
                     .data(byYearData[i].values, function (d) {
                         return d['nameLast'];
                     })
@@ -580,7 +582,7 @@
                     })
                     .attr("id", "avg-circ")
                     .attr("class", function (d) {
-                        return "avg " + d['nameFirst'] + " " + d['nameLast'] + " " + d['debut'].getUTCFullYear();
+                        return "avg2" + d['nameFirst'] + " " + d['nameLast'] + " " + d['debut'].getUTCFullYear();
                     })
                     .attr("r", function (d) {
                         return rScale(d['weight']);
@@ -592,10 +594,10 @@
                         return xScale(d["height"]);
                     })
                     .attr("fill", "red")
-                    .attr("opacity", "0.9");
+                    .attr("opacity", "0.7");
 
             }
-            var year_idx = 100;
+            var year_idx = 99;
 
             var year_interval = setInterval(function () {
                 draw_by_year(byYearData, year_idx);
