@@ -281,6 +281,8 @@
         var div2 = d3.select("body").append("div")
             .attr("class", "tooltip2")
             .style("opacity", 0);
+        var para = d3.select("body").append("p")
+            .attr("class","slider");
 
 
         // function for looping through the dataset
@@ -663,6 +665,12 @@
                         .duration(500)
                         .style("opacity", 0);
                 });
+
+                var slider = d3.select("body")
+                                .append("p")
+                                .attr("class","slider")
+                                .attr("id","year_slider")
+                                .html("<input type ='range'> ");
 
             }
 
