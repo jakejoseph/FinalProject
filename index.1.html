@@ -402,7 +402,7 @@
 
 
                 ;
-
+            // display persistent averages
             var avgs = svg.selectAll("dot")
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
@@ -426,7 +426,7 @@
                     return xScale(d["height"]);
                 })
                 .attr("fill", "red")
-                .attr("opacity", "0.9");
+                .attr("opacity", "0.6");
 
         }
 
