@@ -296,10 +296,7 @@
         var div2 = d3.select("body").append("div")
             .attr("class", "tooltip2")
             .style("opacity", 0);
-        // div for year tooltip
-        var div3 = d3.select("body").append("div")
-            .attr("class", "tooltip3")
-            .style("opacity", 0);
+     
 
         // function for looping through the dataset
         // clears by year, but keeps persistent average as red
@@ -449,7 +446,7 @@
                 .attr("opacity", "0.6");
 
         }
-        //function to run after animation runs.  This function clears all data.
+        //function to run after animation runs.  This function clears all plotting.
         function draw_by_year_clear(byYearData, i) {
 
 
@@ -535,7 +532,6 @@
                 })
             bmi_text.exit().remove();
             bmi_text.enter().append("text");
-            //debugger;
             bmi_text.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
