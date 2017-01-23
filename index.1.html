@@ -12,10 +12,10 @@
             stroke: black;
             shape-rendering: crispEdges;
         }
-        .legend_circ{  
-              fill:black;
-              opacity:.33;
-
+        
+        .legend_circ {
+            fill: black;
+            opacity: .33;
         }
         
         .legend_line {
@@ -29,7 +29,7 @@
             text-anchor: start;
         }
         
-              .legend_title {
+        .legend_title {
             font-size: 15px;
             font-family: sans-serif;
             text-anchor: start;
@@ -58,6 +58,7 @@
             padding: 5px;
             margin: 10px;
             border-radius: 3px;
+            cursor:pointer;
         }
         
         div.tooltip {
@@ -65,6 +66,19 @@
             text-align: center;
             width: 100px;
             height: 50px;
+            padding: 2px;
+            font: 11px sans-serif;
+            background: darkgrey;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            color: black;
+        }
+        div.tooltip2 {
+            position: absolute;
+            text-align: center;
+            width: 50px;
+            height: 25px;
             padding: 2px;
             font: 11px sans-serif;
             background: darkgrey;
@@ -177,7 +191,7 @@
                 .attr("cx", w * .25 + 210)
                 .attr("cy", h / 2 + 145)
                 .attr("r", rScale(175));
-            
+
 
             svg.append("circle")
                 .attr("class", "legend_circ")
@@ -235,17 +249,22 @@
                 .attr("x", w * .25 - 45)
                 .attr("y", (h / 2 + 145) + 33)
                 .text("275 Pounds");
-            
+
             svg.append("text")
                 .attr("class", "legend_title")
                 .attr("x", w * .25 - 50)
-                .attr("y", (h / 2 + 145) -13)
+                .attr("y", (h / 2 + 145) - 13)
                 .text("Player Weight")
 
 
             var div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
+            
+            var div2 = d3.select("body").append("div")
+                .attr("class", "tooltip2")
+                .style("opacity", 0);
+
 
             function draw_by_year(byYearData, i) {
 
@@ -318,10 +337,10 @@
                     .attr("id", "yr-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "50px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", h / 2)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Year: " + d['debut'].getUTCFullYear();
                     })
@@ -340,10 +359,10 @@
                     .attr("id", "bmi-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 100)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                     })
@@ -362,10 +381,10 @@
                     .attr("id", "wt-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 75)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average Weight in pounds:" + Math.round(+d['weight']);
                     })
@@ -377,17 +396,17 @@
                     })
                 ht_text.exit().remove();
                 ht_text.enter().append("text");
-                //debugger;
+
                 ht_text.filter(function (d) {
                         return d['nameLast'] == "Average";
                     })
                     .attr("id", "ht-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 50)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average Height in inches:" + ((Math.round(+d['height'] * 10)) / 10);
                     })
@@ -482,10 +501,10 @@
                     .attr("id", "yr-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "50px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", h / 2)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Year: " + d['debut'].getUTCFullYear();
                     })
@@ -504,10 +523,10 @@
                     .attr("id", "bmi-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 100)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                     })
@@ -526,10 +545,10 @@
                     .attr("id", "wt-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 75)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average Weight in pounds:" + Math.round(+d['weight']);
                     })
@@ -548,10 +567,10 @@
                     .attr("id", "ht-text")
                     .attr("font-family", "sans-serif")
                     .attr("font-size", "20px")
-                    .attr("x", w * .25)
+                    .attr("x", w * .25 - 50)
                     .attr("y", (h / 2) + 50)
                     .attr("fill", "darkgrey")
-                    .attr("opacity", ".5")
+                    .attr("opacity", ".9")
                     .text(function (d) {
                         return "Average Height in inches:" + ((Math.round(+d['height'] * 10)) / 10);
                     })
@@ -560,7 +579,7 @@
                 ;
 
             }
-            var year_idx = 0;
+            var year_idx = 140;
 
             var year_interval = setInterval(function () {
                 draw_by_year(byYearData, year_idx);
@@ -596,6 +615,20 @@
                             .style("color", "black");
                         draw_by_year_clear(byYearData, d - 1871)
                     })
+                    buttons.on("mouseover", function (d) {
+                        d3.select(this);
+                        div2.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div2.html("Data for " + d)
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 17) + "px");
+                    })
+                    buttons.on("mouseout", function (d) {
+                        div2.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
 
                 }
 
