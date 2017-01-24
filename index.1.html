@@ -431,14 +431,14 @@
                     return "Year: " + d['debut'].getUTCFullYear();
                 })
             // display bmi - note the round function to reduce display size
-            var bmi_text = svg.selectAll("#bmi-text")
+            var bmiText = svg.selectAll("#bmi-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            bmi_text.exit().remove();
-            bmi_text.enter().append("text");
-            bmi_text.filter(function (d) {
+            bmiText.exit().remove();
+            bmiText.enter().append("text");
+            bmiText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "bmi-text")
@@ -452,14 +452,14 @@
                     return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                 })
             // display weight - note round function
-            var wt_text = svg.selectAll("#wt-text")
+            var wtText = svg.selectAll("#wt-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            wt_text.exit().remove();
-            wt_text.enter().append("text");
-            wt_text.filter(function (d) {
+            wtText.exit().remove();
+            wtText.enter().append("text");
+            wtText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "wt-text")
@@ -473,15 +473,15 @@
                     return "Average Weight in pounds:" + Math.round(+d['weight']);
                 })
             // Display height note round function
-            var ht_text = svg.selectAll("#ht-text")
+            var htText = svg.selectAll("#ht-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            ht_text.exit().remove();
-            ht_text.enter().append("text");
+            htText.exit().remove();
+            htText.enter().append("text");
 
-            ht_text.filter(function (d) {
+            htText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "ht-text")
@@ -525,7 +525,7 @@
 
         }
         //function to run after animation runs.  This function clears all plotting.
-        function drawByYear_clear(byYearData, i) {
+        function drawByYearClear(byYearData, i) {
 
             var circles = svg.selectAll("#wt-circ")
                 .data(byYearData[i].values, function (d) {
@@ -599,14 +599,14 @@
                     return "Year: " + d['debut'].getUTCFullYear();
                 })
 
-            var bmi_text = svg.selectAll("#bmi-text")
+            var bmiText = svg.selectAll("#bmi-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            bmi_text.exit().remove();
-            bmi_text.enter().append("text");
-            bmi_text.filter(function (d) {
+            bmiText.exit().remove();
+            bmiText.enter().append("text");
+            bmiText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "bmi-text")
@@ -620,14 +620,14 @@
                     return "Average BMI:" + ((Math.round(+d['BMI'] * 100)) / 100);
                 })
 
-            var wt_text = svg.selectAll("#wt-text")
+            var wtText = svg.selectAll("#wt-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            wt_text.exit().remove();
-            wt_text.enter().append("text");
-            wt_text.filter(function (d) {
+            wtText.exit().remove();
+            wtText.enter().append("text");
+            wtText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "wt-text")
@@ -641,14 +641,14 @@
                     return "Average Weight in pounds:" + Math.round(+d['weight']);
                 })
 
-            var ht_text = svg.selectAll("#ht-text")
+            var htText = svg.selectAll("#ht-text")
 
                 .data(byYearData[i].values, function (d) {
                     return d['nameLast'];
                 })
-            ht_text.exit().remove();
-            ht_text.enter().append("text");
-            ht_text.filter(function (d) {
+            htText.exit().remove();
+            htText.enter().append("text");
+            htText.filter(function (d) {
                 return d['nameLast'] == "Average";
             })
                 .attr("id", "ht-text")
@@ -698,19 +698,19 @@
         }
         // start year zero for 1871
         // change for testing to speed code
-        var year_idx = 0;
+        var yearIdx = 0;
 
-        var year_interval = setInterval(function () {
-            drawByYear(byYearData, year_idx);
+        var yearInterval = setInterval(function () {
+            drawByYear(byYearData, yearIdx);
             // sacrifice to get all year span without 
             // taking too long to animate
             // fast animation was complaint in first version
             // this slows animation, shows the whole span without
             // taking as long
-            year_idx = year_idx + 4;
+            yearIdx = yearIdx + 4;
 
-            if (year_idx >= byYearData.length) {
-                clearInterval(year_interval);
+            if (yearIdx >= byYearData.length) {
+                clearInterval(yearInterval);
 
                 var buttons = d3.select("body")
                     .append("div")
@@ -737,7 +737,7 @@
                         .duration(500)
                         .style("background", "lightgrey")
                         .style("color", "black");
-                    drawByYear_clear(byYearData, d - 1871)
+                    drawByYearClear(byYearData, d - 1871)
                 })
                 // provide info on what button does
                 buttons.on("mouseover", function (d) {
@@ -768,7 +768,7 @@
                     .html("<input type ='range' min='1871' max = '2015'> ")
                     ;
                 d3.select('input').on("input", function () {
-                    drawByYear_clear(byYearData, +this.value - 1871);
+                    drawByYearClear(byYearData, +this.value - 1871);
                 })
                 // slider text
                 d3.select("body")
@@ -806,7 +806,7 @@
     <script>
         format = d3.time.format("%Y");
         //import data and convert to numeric
-        d3.csv("BMI_w_averages2.csv",
+        d3.csv("data/BMI_w_averages2.csv",
             function (d) {
                 d["BMI"] = +d["BMI"];
                 d["height"] = +d["height"];
