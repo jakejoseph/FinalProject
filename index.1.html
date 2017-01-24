@@ -157,7 +157,7 @@
             var axisHPadding = 50;
             var axisWPadding = 51;
             //define scales based on max and min of each element - note BMI and height are linear
-            //radius is swuareroot scale to correct for squared radius impact on size of bubble
+            //radius is squareroot scale to correct for squared radius impact on size of bubble
             var yScale = d3.scale.linear()
                 .domain([d3.min(dataset, function (d) {
                     return d["BMI"];
@@ -217,7 +217,6 @@
                 .attr("text-anchor", "end")
                 .attr("x", w / 2)
                 .attr("y", h - 4)
-
                 .text("Height in inches");
 
             svg.append("text")
@@ -248,7 +247,7 @@
                 .attr("cx", w * .25 + 210)
                 .attr("cy", (h / 2 + 145) + 9)
                 .attr("r", rScale(275));
-            // this code defines the lines - the additional
+            // this code defines the lines for legend - the additional
             // subtraction and addition at the end of each line is
             // done to keep the relative position the same as previous 
             // text elements
@@ -265,6 +264,7 @@
                 .attr("x2", w * .25 + 100)
                 .attr("y1", (h / 2 + 145) + 17)
                 .attr("y2", (h / 2 + 145) + 17);
+           
             svg.append("line")
                 .attr("class", "legend_line")
                 .attr("x1", w * .25 + 210)
@@ -313,11 +313,10 @@
             var div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
-            // div for tooltip for navigation span
+            // div for tooltip for navigation spans
             var div2 = d3.select("body").append("div")
                 .attr("class", "tooltip2")
                 .style("opacity", 0);
-
 
             // function for looping through the dataset
             // clears by year, but keeps persistent average as red
@@ -417,7 +416,7 @@
                     .text(function (d) {
                         return "Average Weight in pounds:" + Math.round(+d['weight']);
                     })
-                // Display height
+                // Display height note round function
                 var ht_text = svg.selectAll("#ht-text")
 
                     .data(byYearData[i].values, function (d) {
@@ -472,17 +471,12 @@
             //function to run after animation runs.  This function clears all plotting.
             function draw_by_year_clear(byYearData, i) {
 
-
-
-
                 var circles = svg.selectAll("#wt-circ")
                     .data(byYearData[i].values, function (d) {
                         return d['playerKey'];
                     })
 
                 circles.exit().remove()
-
-
                 circles.enter()
                     .append("circle")
                     .attr("id", "wt-circ")
@@ -529,7 +523,7 @@
 
 
 
-
+                // same text updates as in other function
                 var year_text = svg.selectAll("#yr-text")
                     .data(byYearData[i].values, function (d) {
                         return d['playerKey'];
@@ -611,20 +605,14 @@
                     .text(function (d) {
                         return "Average Height in inches:" + ((Math.round(+d['height'] * 10)) / 10);
                     })
-
-
                     ;
-
-
+                // remove all data elements on screen
+                // without this code, does not clear 1971?
                 d3.selectAll("#avg-circ")
                     .remove();
                 d3.selectAll("#avg-circ2")
                     .remove();
-
-
-
-
-
+                // add red dots, clear after each 
                 var avgs2 = svg.selectAll("dot2")
                     .data(byYearData[i].values, function (d) {
                         return d['nameLast'];
@@ -652,16 +640,22 @@
                     .attr("opacity", "0.8");
 
             }
+            // start year zero for 1871
+            // change for testing to speed code
             var year_idx = 133;
 
             var year_interval = setInterval(function () {
                 draw_by_year(byYearData, year_idx);
-
+                // sacrifice to get all year span without 
+                // taking too long to animate
+                // fast animation was complaint in first version
+                // this slows animation, shows the whole span without
+                // taking as long
                 year_idx = year_idx + 4;
 
                 if (year_idx >= byYearData.length) {
                     clearInterval(year_interval);
-
+                    
                     var buttons = d3.select("body")
                         .append("div")
                         .attr("class", "years_buttons")
