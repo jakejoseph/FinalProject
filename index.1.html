@@ -124,6 +124,22 @@
             z-index: 1000;
             border-color: black;
         }
+        div.tooltip3 {
+            position: fixed;
+            text-align: center;
+            width: 50px;
+            height: 25px;
+            padding: 2px;
+            font: 11px sans-serif;
+            background: white;
+            border: 1px;
+            border-style: solid;
+            border-radius: 8px;
+            pointer-events: none;
+            color: black;
+            z-index: 1000;
+            border-color: black;
+        }
         
         .page_title {
             font-size: 30px;
@@ -316,6 +332,10 @@
             // div for tooltip for navigation spans
             var div2 = d3.select("body").append("div")
                 .attr("class", "tooltip2")
+                .style("opacity", 0);
+
+            var div4 = d3.select("body").append("div")
+                .attr("class", "tooltip3")
                 .style("opacity", 0);
 
             // function for looping through the dataset
@@ -655,7 +675,7 @@
 
                 if (year_idx >= byYearData.length) {
                     clearInterval(year_interval);
-                    
+
                     var buttons = d3.select("body")
                         .append("div")
                         .attr("class", "years_buttons")
@@ -717,6 +737,21 @@
                         .append("div")
                         .attr("class", "slider_end")
                         .html("2015")
+                    slider.on("mouseover", function (d) {
+                        d3.select(this);
+                        div4.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        div4.html("Year Selector")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY + 17) + "px");
+                    })
+                    slider.on("mouseout", function (d) {
+                        div4.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+
 
 
                 }
