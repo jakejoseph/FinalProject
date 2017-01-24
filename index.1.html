@@ -663,7 +663,7 @@
             }
             // start year zero for 1871
             // change for testing to speed code
-            var year_idx = 133;
+            var year_idx = 0;
 
             var year_interval = setInterval(function () {
                 draw_by_year(byYearData, year_idx);
@@ -687,6 +687,7 @@
                         .text(function (d) {
                             return d;
                         });
+                    // move to year function for button
                     buttons.on("click", function (d) {
 
                         d3.select(".years_buttons")
@@ -703,6 +704,7 @@
                             .style("color", "black");
                         draw_by_year_clear(byYearData, d - 1871)
                     })
+                    // provide info on what button does
                     buttons.on("mouseover", function (d) {
                         d3.select(this);
                         div2.transition()
@@ -717,12 +719,12 @@
                             .duration(500)
                             .style("opacity", 0);
                     });
-
+                    //label slider text
                     d3.select("body")
                         .append("div")
                         .attr("class", "slider_begin")
                         .html("1871");
-
+                    //slider to navigate to a specific year
                     var slider = d3.select("body")
                         .append("div")
                         .attr("class", "slider")
@@ -733,11 +735,12 @@
                     d3.select('input').on("input", function () {
                         draw_by_year_clear(byYearData, +this.value - 1871);
                     })
-
+                    // slider text
                     d3.select("body")
                         .append("div")
                         .attr("class", "slider_end")
                         .html("2015")
+                    //label for what slider does
                     slider.on("mouseover", function (d) {
                         d3.select(this);
                         div4.transition()
@@ -767,6 +770,7 @@
 <body>
     <script>
         format = d3.time.format("%Y");
+        //import data and convert to numeric
         d3.csv("BMI_w_averages2.csv",
             function (d) {
                 d["BMI"] = +d["BMI"];
@@ -776,7 +780,7 @@
                     "debut"]);
                 d['playerKey'] = +d['playerKey'];
                 return d;
-
+                // call main function
             }, draw_BMI);
     </script>
 </body>
