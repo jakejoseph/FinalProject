@@ -12,7 +12,10 @@
             stroke: black;
             shape-rendering: crispEdges;
         }
-        
+        .reference{
+            font-size:12px;
+            font-family:sans-serif
+        }
         .legend_circ {
             fill: black;
             opacity: .33;
@@ -228,6 +231,32 @@
                 .attr("x", wPadding - 2)
                 .attr("y", hPadding)
                 .text("144 Years of the Shapes and Sizes of Baseball Players");
+            //append brief description of data source
+
+            svg.append("text")
+                .attr("class", "reference")
+                .attr("text-anchor", "start")
+                .attr("x", wPadding - 2)
+                .attr("y", hPadding + 20)
+                .text("Data taken from Sean Lahman's Baseball Database.");
+            svg.append("text")
+                .attr("class", "reference")
+                .attr("text-anchor", "start")
+                .attr("x", wPadding - 2)
+                .attr("y", hPadding + 35)
+                .text("Data includes all players with weight and height records");
+            svg.append("text")
+                .attr("class", "reference")
+                .attr("text-anchor", "start")
+                .attr("x", wPadding - 2)
+                .attr("y", hPadding + 50)
+                .text("from the master.csv file.  Year represents the debut year of");
+             svg.append("text")
+                .attr("class", "reference")
+                .attr("text-anchor", "start")
+                .attr("x", wPadding - 2)
+                .attr("y", hPadding + 65)
+                .text("the player in the major leagues");
             //append labels to page
             svg.append("text")
                 .attr("class", "x label")
@@ -334,7 +363,7 @@
             var div2 = d3.select("body").append("div")
                 .attr("class", "tooltip2")
                 .style("opacity", 0);
-
+            // div for tool tip for slider
             var div4 = d3.select("body").append("div")
                 .attr("class", "tooltip3")
                 .style("opacity", 0);
