@@ -10,6 +10,19 @@ Finally, I wanted to keep the overall idea of the Martini Glass design with the 
 
 ##Overall design considerations
 
+I wanted the design to look modern, and taking in mind the admonition about the judicious use of color, I selected a grey palette for all of the legends and the title.   I chose to make the text on everything but the axes legends grey, so that it wouldn’t draw attention away from the animation.  The axes, by necessity, had small text, and in order to make this more readable for the viewer, I chose to make these black, as well as the axes themselves black.  I used a standard font for all of the text in the document, choosing san-serif.
+I chose to make the individual shapes that represented each player grey as well.  In order to prevent over plotting, I experimented with the transparency of these shapes.  However, for each year, I chose to have a single red dot that represented “Joe Average” or the average player for that year.  This would persist in the display so that the user could see the track that this had.
+Both x and y were linear scales.   An important note – **the x scale is by necessity that long.**  In 1951, there is a single data point that indicates a very short player. I could have taken this data point out, but chose not to do so for several reasons.
+1.	It is an interesting piece of baseball history
+2.	The amount of white space on the graph gave me room to put the legend
+I used a square scale to prevent a “lie factor” from occurring in the representation of the weight of each data point. 
+I added a basic legend that showed the user what a circle represented.  An updating legend also provided data for each years’ average player. 
+I animated the graphic so that it showed all of the years in the dataset within approximately 70 seconds.  I was trying to keep the update of the design less than 60 seconds to keep user attention. 
+Finally, to complete the design, I added buttons to allow the user to select specific years.  After selecting the year using these buttons, the user could get the physical data associated with a player by hovering over the individual data point using tool tips.
+
+
+##Design Changes Based On Feedback
+
 #Feedback
 
 ###What do you notice in the visualization?
