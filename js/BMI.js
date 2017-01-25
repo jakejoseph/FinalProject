@@ -490,7 +490,7 @@ function drawBMI(dataset) {
     }
     // start year zero for 1871
     // change for testing to speed code
-    var yearIdx = 0;
+    var yearIdx = 143;
 
     var yearInterval = setInterval(function () {
         drawByYear(byYearData, yearIdx);
@@ -516,14 +516,15 @@ function drawBMI(dataset) {
                 " in an average baseball player's BMI, weight, and height from 1871 to 2015." +
                 " To begin exploring the data, click on the buttons or" +
                 " slider above.")
-                .style("left", "900px")
-                .style("top", "35px");
+                .style("left", "500px")
+                .style("top", "75px");
 
             explanation.on("click", function (d) {
                 d3.select(".explanation")
                     .transition()
                     .duration(500)
-                    .style("opacity", "0");
+                    .style("opacity", "0")
+                    .style("z-index", "0");
             });
 
             var buttons = d3.select("body")
@@ -542,8 +543,8 @@ function drawBMI(dataset) {
                 d3.select(".explanation")
                     .transition()
                     .duration(1500)
-                    .style("opacity", "0");
-
+                    .style("opacity", "0")
+                    .style("z-index", "0");
                 d3.select(".years_buttons")
                     .selectAll("span")
                     .transition()
@@ -604,7 +605,8 @@ function drawBMI(dataset) {
                 d3.select(".explanation")
                     .transition()
                     .duration(1500)
-                    .style("opacity", "0");
+                    .style("opacity", "0")
+                    .style("z-index", "0");
                 d3.select(this);
                 div4.transition()
                     .duration(200)
