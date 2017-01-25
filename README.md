@@ -50,7 +50,7 @@ I added where I had gotten the dataset, and what the graph was representing base
 * Increase contrast on legend to make it more readable
 * Add code comments/cleanup and abstract some functions
 * Add cursor:pointer logic or highlight to let user know an area is clickable
-
+* Move red dot to front to make it stand out more
 
 ###Additional features
 
@@ -58,6 +58,7 @@ I added where I had gotten the dataset, and what the graph was representing base
 
 I wanted the user to be able to explore the dataset in a finer grain, so I added a slider to let the user jump to a particular year.
 
+* I changed the year selections at the top to show the extremes - those years chosen for the buttons all have the tallest, largest BMI, largest weight, smallest BMI, smallest weight, and shortest.
 
 #Modications suggested, but not made
 
