@@ -17,3 +17,6 @@ Completed
 
 ##Old files not rendering
 Fixed, changed location of data file to allow old files to render.
+
+##Add caption after animation describing findings
+Completed

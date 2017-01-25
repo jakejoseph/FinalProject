@@ -490,7 +490,7 @@ function drawBMI(dataset) {
     }
     // start year zero for 1871
     // change for testing to speed code
-    var yearIdx = 140;
+    var yearIdx = 0;
 
     var yearInterval = setInterval(function () {
         drawByYear(byYearData, yearIdx);
@@ -507,9 +507,17 @@ function drawBMI(dataset) {
             var explanation = d3.select(".explanation")
 
                 .style("opacity", "1")
-                .text("test, test, test, test, test")
+                .html("From 1871 to 1991, the height and weight of baseball players" +
+                " increased proportionally. Starting in 1991, players stopped increasing" +
+                " in height, yet continued to increase in weight." +
+                " As a result the average player's BMI stays relatively stable until 1991, and then" +
+                " begins to increase dramatically; as BMI is a representative measure of the" +
+                " proportionality of a person's height and weight. The red circles represent the changes" +
+                " in an average baseball player's BMI, weight, and height from 1871 to 2015." +
+                " To begin exploring the data, click on the buttons or" +
+                " slider above.")
                 .style("left", "900px")
-                .style("top", "250px");
+                .style("top", "35px");
 
             explanation.on("click", function (d) {
                 d3.select(".explanation")
@@ -531,6 +539,11 @@ function drawBMI(dataset) {
             // move to year function for button
             buttons.on("click", function (d) {
 
+                d3.select(".explanation")
+                    .transition()
+                    .duration(1500)
+                    .style("opacity", "0");
+
                 d3.select(".years_buttons")
                     .selectAll("span")
                     .transition()
@@ -548,6 +561,11 @@ function drawBMI(dataset) {
             // provide info on what button does
             // modeled on d3noob adding tooltips website
             buttons.on("mouseover", function (d) {
+                d3.select(".explanation")
+                    .transition()
+                    .duration(1500)
+                    .style("opacity", "0");
+
                 d3.select(this);
                 div2.transition()
                     .duration(200)
@@ -583,6 +601,10 @@ function drawBMI(dataset) {
                 .html("2015")
             //label for what slider does
             slider.on("mouseover", function (d) {
+                d3.select(".explanation")
+                    .transition()
+                    .duration(1500)
+                    .style("opacity", "0");
                 d3.select(this);
                 div4.transition()
                     .duration(200)
@@ -592,6 +614,7 @@ function drawBMI(dataset) {
                     .style("top", (d3.event.pageY + 17) + "px");
             })
             slider.on("mouseout", function (d) {
+
                 div4.transition()
                     .duration(500)
                     .style("opacity", 0);
