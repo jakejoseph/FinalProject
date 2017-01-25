@@ -747,6 +747,7 @@
                         drawByYearClear(byYearData, d - 1871)
                     })
                     // provide info on what button does
+                    // modeled on d3noob adding tooltips website
                     buttons.on("mouseover", function (d) {
                         d3.select(this);
                         div2.transition()
