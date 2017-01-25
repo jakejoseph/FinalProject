@@ -18,29 +18,19 @@ function drawBMI(dataset) {
     var axisWPadding = 51;
     //define scales based on max and min of each element - note BMI and height are linear
     //radius is squareroot scale to correct for squared radius impact on size of bubble
+    //used extent function to simplfy code
     var yScale = d3.scale.linear()
-        .domain([d3.min(dataset, function (d) {
-            return d["BMI"];
-        }), d3.max(dataset, function (d) {
-            return d["BMI"];
-        })])
+        .domain(d3.extent(dataset, function (d) { return d.BMI; }))
         .range([h - hPadding, hPadding]);
 
     var xScale = d3.scale.linear()
-        .domain([d3.min(dataset, function (d) {
-            return d["height"];
-        }), d3.max(dataset, function (d) {
-            return d["height"];
-        })])
+        .domain(d3.extent(dataset, function (d) { return d.height; }))
         .range([wPadding, w - wPadding]);
 
     var rScale = d3.scale.sqrt()
-        .domain([d3.min(dataset, function (d) {
-            return d["weight"];
-        }), d3.max(dataset, function (d) {
-            return d["weight"];
-        })])
+        .domain(d3.extent(dataset, function (d) { return d.weight; }))
         .range([5, 30]);
+
     // make svg object for all d3 object placement
     var svg = d3.select("body").append("svg");
     svg.attr("width", w)
@@ -63,38 +53,27 @@ function drawBMI(dataset) {
         .attr("class", "axis")
         .attr("transform", "translate(" + (w - axisWPadding) + ",0)")
         .call(yAxis);
-    
-    function addText(cls,x,y,string){
+    //abstracted text add function for text-anchor start
+    function addText(cls, x, y, string) {
         svg.append("text")
-        .attr("class", cls)
-        .attr("text-anchor", "start")
-        .attr("x", x)
-        .attr("y", y)
-        .text(string);
+            .attr("class", cls)
+            .attr("text-anchor", "start")
+            .attr("x", x)
+            .attr("y", y)
+            .text(string);
 
     }
 
     //append title to page
-    addText ("reference",wPadding - 2,hPadding,"144 Years of the Shapes and Sizes of Baseball Players");
-   
+    addText("pageTitle", wPadding - 2, hPadding, "144 Years of the Shapes and Sizes of Baseball Players");
+
     //append brief description of data source
-    addText ("reference",wPadding - 2,hPadding+20,"Data taken from Sean Lahman's Baseball Database.");
-    addText ("reference",wPadding - 2,hPadding+35," Year represents the debut year of the player in the major leagues.");
-  
-        //.text("the player in the major leagues.  Each grey circle represents");
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 80)
-        .text("a player who debuted in the majors that year.");
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 95)
-        .text("Click on a player for more information.");
+    addText("reference", wPadding - 2, hPadding + 20, "Data taken from Sean Lahman's Baseball Database.");
+    addText("reference", wPadding - 2, hPadding + 35, "Year represents the debut year of the player in the major leagues.");
+    addText("reference", wPadding - 2, hPadding + 50, "Each grey circle representsa player who debuted in the majors that year.");
+    addText("referenceInst", wPadding - 2, hPadding + 95, "Click on a player for more information.");
     //append labels to page
+    //didn't abstract these, because they are different than other text adds
     svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "end")
@@ -117,7 +96,6 @@ function drawBMI(dataset) {
         .attr("cx", w * .25 + 210)
         .attr("cy", h / 2 + 145)
         .attr("r", rScale(175));
-
 
     svg.append("circle")
         .attr("class", "legendCirc")
@@ -162,34 +140,15 @@ function drawBMI(dataset) {
         .attr("y1", (h / 2 + 145) + 35)
         .attr("y2", (h / 2 + 145) + 35);
     //labels for legend
-    svg.append("text")
-        .attr("class", "legendLabel")
-        .attr("x", w * .25 + 105)
-        .attr("y", (h / 2 + 145) + 15)
-        .text("175 Pounds");
-
-    svg.append("text")
-        .attr("class", "legendLabel")
-        .attr("x", w * .25 + 25)
-        .attr("y", (h / 2 + 145) + 24)
-        .text("225 Pounds");
-
-    svg.append("text")
-        .attr("class", "legendLabel")
-        .attr("x", w * .25 - 45)
-        .attr("y", (h / 2 + 145) + 33)
-        .text("275 Pounds");
+    addText("legendLabel", w * .25 + 105, (h / 2 + 145) + 15, "175 Pounds");
+    addText("legendLabel", w * .25 + 25, (h / 2 + 145) + 24, "225 Pounds");
+    addText("legendLabel", w * .25 - 45, (h / 2 + 145) + 33, "275 Pounds");
+    addText("legendTitle", w * .25 - 50, (h / 2 + 145) - 13, "Player Weight");
 
     svg.append("text")
         .attr("class", "legendTitle")
         .attr("x", w * .25 - 50)
-        .attr("y", (h / 2 + 145) - 13)
-        .text("Player Weight")
-
-    svg.append("text")
-        .attr("class", "legendTitle")
-        .attr("x", w * .25 - 50)
-        .attr("y", (h / 2 + 145))
+        .attr("y", (h / 2 + 147))
         .style("fill", "red")
         .text("Red Indicates Average Player");
     // divs for tooltip on data
@@ -528,7 +487,7 @@ function drawBMI(dataset) {
     }
     // start year zero for 1871
     // change for testing to speed code
-    var yearIdx = 0;
+    var yearIdx = 140;
 
     var yearInterval = setInterval(function () {
         drawByYear(byYearData, yearIdx);
