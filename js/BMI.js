@@ -490,7 +490,7 @@ function drawBMI(dataset) {
     }
     // start year zero for 1871
     // change for testing to speed code
-    var yearIdx = 143;
+    var yearIdx = 0;
 
     var yearInterval = setInterval(function () {
         drawByYear(byYearData, yearIdx);
