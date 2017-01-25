@@ -37,7 +37,7 @@ I realized that the animation was too fast, but I wanted to keep all of the year
 
 * Improve the clarity of the legend for weight
 
-In order to improve the clarity of the legend for the weight function, I examined a few other graphics and realized that the dots needed to overlap to show how the weight was changing.  Because I purposefully did not exaggerate the weight scale, and the transition was slow, it was difficult for the user to tell that the circles representing the weights were different sizes.  By creating an overlay, I was able to show this, and spell out what the circles represent.
+In order to improve the clarity of the legend for the weight function, I examined a few other graphics and realized that the dots needed to overlap to show how the weight was changing.  Because I purposefully did not exaggerate the weight scale, and the transition was slow, it was difficult for the user to tell that the circles representing the weights were different sizes.  By creating an overlay, I was able to show this, and spell out what the circles represent.  I also spelled out what the red represented.
 
 * Allow user to click on player to determine information about player
 
