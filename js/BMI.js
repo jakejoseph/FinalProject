@@ -63,40 +63,25 @@ function drawBMI(dataset) {
         .attr("class", "axis")
         .attr("transform", "translate(" + (w - axisWPadding) + ",0)")
         .call(yAxis);
+    
+    function addText(cls,x,y,string){
+        svg.append("text")
+        .attr("class", cls)
+        .attr("text-anchor", "start")
+        .attr("x", x)
+        .attr("y", y)
+        .text(string);
+
+    }
 
     //append title to page
-    svg.append("text")
-        .attr("class", "pageTitle")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding)
-        .text("144 Years of the Shapes and Sizes of Baseball Players");
+    addText ("reference",wPadding - 2,hPadding,"144 Years of the Shapes and Sizes of Baseball Players");
+   
     //append brief description of data source
-
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 20)
-        .text("Data taken from Sean Lahman's Baseball Database.");
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 35)
-        .text("Data includes all players with weight and height records");
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 50)
-        .text("from the master.csv file.  Year represents the debut year of");
-    svg.append("text")
-        .attr("class", "reference")
-        .attr("text-anchor", "start")
-        .attr("x", wPadding - 2)
-        .attr("y", hPadding + 65)
-        .text("the player in the major leagues.  Each grey circle represents");
+    addText ("reference",wPadding - 2,hPadding+20,"Data taken from Sean Lahman's Baseball Database.");
+    addText ("reference",wPadding - 2,hPadding+35," Year represents the debut year of the player in the major leagues.");
+  
+        //.text("the player in the major leagues.  Each grey circle represents");
     svg.append("text")
         .attr("class", "reference")
         .attr("text-anchor", "start")
