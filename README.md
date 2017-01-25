@@ -175,24 +175,45 @@ Hope it help.
 #Resources
 
 General informaton about d3 usage
+
 http://alignedleft.com/
+
 More general information about d3 usage
+
 https://bost.ocks.org/mike/
+
 Information about input range
+
 http://www.w3schools.com/jsref/dom_obj_range.asp
+
 http://stackoverflow.com/questions/10752189/how-do-i-set-the-width-in-pixels-of-an-input-slider
+
 https://bl.ocks.org/eesur/9910343
+
 http://bl.ocks.org/pranitar/01305d9ad0eba73dbf80
+
 http://codepen.io/trevanhetzel/pen/rOVrGK
+
 Adding link to d3 code
+
 http://stackoverflow.com/questions/10569225/d3-js-click-to-link-to-another-url-encoded-with-variables
+
 Getting text to align correctly
+
 https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor
+
 Axis Labeling
+
 http://stackoverflow.com/questions/11189284/d3-axis-labeling
+
 BMI Calculation
+
 http://extoxnet.orst.edu/faqs/dietcancer/web2/twohowto.html
+
 Baseball data
+
 http://seanlahman.com/
+
 Tooltip code
+
 http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
