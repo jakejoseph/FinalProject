@@ -163,6 +163,9 @@ function drawBMI(dataset) {
     var div4 = d3.select("body").append("div")
         .attr("class", "tooltip3")
         .style("opacity", 0);
+    var div5 = d3.select("body").append("div")
+        .attr("class", "explanation")
+        .style("opacity", 0);
 
     // function for looping through the dataset
     // clears by year, but keeps persistent average as red
@@ -500,6 +503,20 @@ function drawBMI(dataset) {
 
         if (yearIdx >= byYearData.length) {
             clearInterval(yearInterval);
+
+            var explanation = d3.select(".explanation")
+
+                .style("opacity", "1")
+                .text("test, test, test, test, test")
+                .style("left", "900px")
+                .style("top", "250px");
+
+            explanation.on("click", function (d) {
+                d3.select(".explanation")
+                    .transition()
+                    .duration(500)
+                    .style("opacity", "0");
+            });
 
             var buttons = d3.select("body")
                 .append("div")

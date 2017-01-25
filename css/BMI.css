@@ -144,6 +144,22 @@
             z-index: 1000;
             border-color: black;
         }
+        div.explanation{
+            position: fixed;
+            text-align: center;
+            width: 50px;
+            height: 25px;
+            padding: 2px;
+            font: 11px sans-serif;
+            background: white;
+            border: 1px;
+            border-style: solid;
+            border-radius: 8px;
+            color: black;
+            z-index: 1000;
+            border-color: black;
+        }
+
         
         .pageTitle {
             font-size: 30px;
