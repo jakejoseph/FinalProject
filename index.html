@@ -263,6 +263,12 @@
             .attr("x", wPadding - 2)
             .attr("y", hPadding + 80)
             .text("a player who debuted in the majors that year.");
+             svg.append("text")
+            .attr("class", "reference")
+            .attr("text-anchor", "start")
+            .attr("x", wPadding - 2)
+            .attr("y", hPadding + 95)
+            .text("Click on a player for more information.");
         //append labels to page
         svg.append("text")
             .attr("class", "x label")

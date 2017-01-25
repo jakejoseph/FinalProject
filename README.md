@@ -31,41 +31,41 @@ Finally, to complete the design, I added buttons to allow the user to select spe
 
 ##Design Changes Based On Feedback
 
-1. Slow down the animation
+* Slow down the animation
 
 I realized that the animation was too fast, but I wanted to keep all of the years to show the trends in weight, height and BMI.  I realized that I could skip years in the animation, and therefore, slow down the transitions.  I experimented with the amount of years skipped to arrive at a smooth, relatively quick animation.
 
-2. Improve the clarity of the legend for weight
+* Improve the clarity of the legend for weight
 
 In order to improve the clarity of the legend for the weight function, I examined a few other graphics and realized that the dots needed to overlap to show how the weight was changing.  Because I purposefully did not exaggerate the weight scale, and the transition was slow, it was difficult for the user to tell that the circles representing the weights were different sizes.  By creating an overlay, I was able to show this, and spell out what the circles represent.
 
-3. Allow user to click on player to determine information about player
+* Allow user to click on player to determine information about player
 
 A user suggested that they would like to know what position a player was in.  This is an extremely complex problem, as players may play multiple positions, and may change these throughout their career.  I realized the best way to accomplish getting more information about a player was to click on them and open a google search.
 
-4. Add information about where dataset came from
+* Add information about where dataset came from
 
 I added where I had gotten the dataset, and what the graph was representing based on user feedback.  
 
-5. Increase contrast on legend to make it more readable
-6. Add code comments/cleanup and abstract some functions
-7. Add cursor:pointer logic or highlight to let user know an area is clickable
+* Increase contrast on legend to make it more readable
+* Add code comments/cleanup and abstract some functions
+* Add cursor:pointer logic or highlight to let user know an area is clickable
 
 
 ###Additional features
 
-1. Add input box to allow user to jump to any year
+* Add input box to allow user to jump to any year
 
 I wanted the user to be able to explore the dataset in a finer grain, so I added a slider to let the user jump to a particular year.
 
 
 #Modications suggested, but not made
 
-1. Rescale Height
-* height scale needed as design choice to allow for one player in 1951 to show up
-* height scale allows for text block on left side of screen
-2. Add number of players per year
-3. Add position:relative to div buttons
+* Rescale Height
+  * height scale needed as design choice to allow for one player in 1951 to show up
+  * height scale allows for text block on left side of screen
+* Add number of players per year
+* Add position:relative to div buttons
 
 #Feedback
 
@@ -171,7 +171,25 @@ If I were you, I would do below:
 3) I don't think "fix" the above "div button" is a good choice (which we were taught in the lesson), the button should flow the "svg element" when I move the middle mouse button. I use "position:relative;" in my work.
 Hope it help.
 
-
-
 #Resources
-list any sources you consulted to create your visualization
+
+General informaton about d3 usage
+http://alignedleft.com/
+More general information about d3 usage
+https://bost.ocks.org/mike/
+Information about input range
+http://www.w3schools.com/jsref/dom_obj_range.asp
+http://stackoverflow.com/questions/10752189/how-do-i-set-the-width-in-pixels-of-an-input-slider
+https://bl.ocks.org/eesur/9910343
+http://bl.ocks.org/pranitar/01305d9ad0eba73dbf80
+http://codepen.io/trevanhetzel/pen/rOVrGK
+Adding link to d3 code
+http://stackoverflow.com/questions/10569225/d3-js-click-to-link-to-another-url-encoded-with-variables
+Getting text to align correctly
+https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor
+Axis Labeling
+http://stackoverflow.com/questions/11189284/d3-axis-labeling
+BMI Calculation
+http://extoxnet.orst.edu/faqs/dietcancer/web2/twohowto.html
+Baseball data
+http://seanlahman.com/
